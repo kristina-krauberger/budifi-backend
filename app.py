@@ -26,7 +26,12 @@ def add_user():
   email = data.get('email')
   password = data.get('password')
   hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-  new_user = User(first_name, last_name, email, hashed_password)
+  new_user = User(
+    first_name=first_name,
+    last_name=last_name,
+    email=email,
+    password=hashed_password
+  †)
 
   data_manager.create_user(new_user)
 
@@ -40,7 +45,7 @@ if __name__ == '__main__':
     from models.enrollment import Enrollment
     db.create_all()
 
-  app.run(host="0.0.0.0", port=5001, debug=True)
+  app.run(host="0.0.0.0", port=5002, debug=True)
 
 
 
