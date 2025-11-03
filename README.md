@@ -26,7 +26,7 @@ It manages users, courses, and enrollments (progress tracking).
 Place screenshots in the `assets` folder and reference them here like this:
 
 ```markdown
-- [App Flow](assets/app_flow_v1.png)
+![App Flow](assets/app_flow_v1.png)
 ```
 
 ---
