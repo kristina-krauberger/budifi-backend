@@ -30,8 +30,7 @@ def add_user():
     first_name=first_name,
     last_name=last_name,
     email=email,
-    password=hashed_password
-  †)
+    password=hashed_password)
 
   data_manager.create_user(new_user)
 
