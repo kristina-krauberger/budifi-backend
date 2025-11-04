@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
 from data_manager import DataManager
+from datetime import datetime
 from extentions import db
 import os
 
@@ -35,6 +36,40 @@ def add_user():
   data_manager.create_user(new_user)
 
   return jsonify({"message":"user created successfully"}), 200
+
+
+@app.route('/api/user/<int:user_id>/dashboard', methods=['GET'])
+def show_user_dashboard(user_id):
+  """Shows dashboard including user progress."""
+
+  # ÜBERSETZT: Hol mir mit .get() aus der "User" Tabelle die Instanz mit PRIMÄRSCHLÜSSEL "user_id" = 1 und pack in Variable "user"
+  user = User.query.get(user_id)
+  first_name = user.first_name
+  print(f"User: {user}, {type(user)}")
+  print(f"First: {first_name}, {type(first_name)}, {len(first_name)}")
+
+  # ÜBERSETZT: Hol mir aus der "Enrollment" JOINT-Tabelle durch FILTERUNG der "user_id" = user_id und pack Instanz in Variable "enrollment"
+  # ÜBERSETZT: .all() gib mir alle Spalten zu User 3 (Lina hat 3 Kurse belegt)
+  enrollment = Enrollment.query.filter_by(user_id=user_id).all()
+  progress_per_course = [progress.progress for progress in enrollment]
+  print(f"Enrollment: {enrollment}, {type(enrollment)}")
+  print(f"Progress: {progress_per_course}, {type(progress_per_course)}")
+
+  # Shows days of enrolment for each user since signup.
+  enrolled_at = enrollment[0].enrolled_at
+  days_since_enrolled = (datetime.utcnow() - enrolled_at).days
+  print(f"Enrolled at: {enrolled_at}, {type(enrolled_at)}")
+  print(f"Enrolled since '{days_since_enrolled}' days! {type(days_since_enrolled)}")
+
+  user_dashboard_data = {
+    "user_id": user.id,
+    "first_name": first_name,
+    "days_since_enrolled": days_since_enrolled,
+    "courses": []
+  }
+
+  return jsonify(user_dashboard_data), 200
+
 
 
 if __name__ == '__main__':
