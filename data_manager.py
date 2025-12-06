@@ -1,17 +1,26 @@
+from enum import nonmember
+
 from sqlalchemy import select
 from models.course import Course
 from models.user import User
 from models.enrollment import Enrollment
 from datetime import datetime
+from flask_bcrypt import Bcrypt
+
 
 class DataManager:
 
-    def __init__(self, db):
+    def __init__(self, app, db):
         """Initializes the DataManager with a database session."""
+        self.app = app
         self.db = db
+        self.bcrypt = Bcrypt(app)  # initiates bcrypt für hashing password
+
 
     def create_user(self, user: User):
         """Creates a new user with the given user data. Returns error message if input is invalid."""
+
+        user.password = self.hash_value(user.password)
 
         try:
             self.db.session.add(user)
@@ -19,6 +28,18 @@ class DataManager:
             return None
         except Exception as e:          #TODO: später "Exception" entfernen
             return f"{e}"
+
+
+    def hash_value(self, string):
+        return self.bcrypt.generate_password_hash(string).decode("utf-8")
+
+
+    def get_user_with_email_password(self, email, password):
+        hash_password = self.hash_value(password)
+        user = self.db.session.execute(select(User).where(User.email==email, User.password==hash_password)).scalar_one_or_none()
+        if not user:
+            return None
+        return user
 
 
     def get_current_user_dashboard(self, user_id):
@@ -54,3 +75,4 @@ class DataManager:
             "courses": courses_data
         }
         return user_dashboard_data
+
