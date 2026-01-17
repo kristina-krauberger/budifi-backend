@@ -1,0 +1,315 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "course_number": 1,
+      "title": "INVESTIEREN",
+      "isLastCourse": false,
+      "lessons": [
+        {
+          "id": 1,
+          "lesson_number": 1,
+          "title": "Was ist Investieren?",
+          "duration": 10,
+          "isCompleted": true,
+          "isLastLesson": false,
+          "summaryCongrats": "Stark! Die erste Lesson geschafft.",
+          "summaryText": "Was ist Investieren? – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was bedeutet investieren?",
+              "optionsAnswer": [
+                "Geld ausgeben",
+                "Geld anlegen",
+                "Geld sparen"
+              ],
+              "correctAnswer": 1
+            },
+            {
+              "quiz_number": 1,
+              "question_number": 2,
+              "question_text": "Warum ist Zinseszins beim Investieren wichtig?",
+              "optionsAnswer": [
+                "Weil man schneller Geld ausgeben kann",
+                "Weil Banken das verlangen",
+                "Weil Gewinne wieder mitverzinst werden"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "lesson_number": 2,
+          "title": "Aktien und Anleihen",
+          "duration": 15,
+          "isCompleted": true,
+          "isLastLesson": false,
+          "summaryCongrats": "Dranbleiben zahlt sich aus!",
+          "summaryText": "Aktien und Anleihen – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was ist eine Aktie?",
+              "optionsAnswer": [
+                "Ein Kredit",
+                "Ein Unternehmensanteil",
+                "Eine Versicherung"
+              ],
+              "correctAnswer": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "lesson_number": 3,
+          "title": "Investmentfonds",
+          "duration": 12,
+          "isCompleted": true,
+          "isLastLesson": false,
+          "summaryCongrats": "Nice! Du wächst mit jedem Schritt.",
+          "summaryText": "Investmentfonds – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was macht ein Fonds?",
+              "optionsAnswer": [
+                "Er spart Geld",
+                "Er bündelt Anlagen",
+                "Er vergibt Kredite"
+              ],
+              "correctAnswer": 1
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "lesson_number": 4,
+          "title": "Risiken verstehen",
+          "duration": 20,
+          "isCompleted": true,
+          "isLastLesson": false,
+          "summaryCongrats": "Yes! Du bist im Flow.",
+          "summaryText": "Risiken verstehen – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was ist ein Risiko?",
+              "optionsAnswer": [
+                "Garantie",
+                "Unsicherheit",
+                "Gewinn"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "lesson_number": 5,
+          "title": "Langfristige Strategien",
+          "duration": 18,
+          "isCompleted": true,
+          "isLastLesson": true,
+          "summaryCongrats": "Routine beats Motivation – und du hast beides!",
+          "summaryText": "Langfristige Strategien – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was bedeutet langfristig investieren?",
+              "optionsAnswer": [
+                "Schnell verkaufen",
+                "Geduldig bleiben",
+                "Alles riskieren"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "course_number": 2,
+      "title": "SPAREN",
+      "isLastCourse": false,
+      "lessons": [
+        {
+          "id": 1,
+          "lesson_number": 1,
+          "title": "Warum sparen?",
+          "duration": 8,
+          "isCompleted": true,
+          "isLastLesson": false,
+          "summaryCongrats": "Heute eine, morgen die Welt!",
+          "summaryText": "Warum sparen? – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Warum sollte man sparen?",
+              "optionsAnswer": [
+                "Für Sicherheit",
+                "Für Schulden",
+                "Für Stress"
+              ],
+              "correctAnswer": 1
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "lesson_number": 2,
+          "title": "Sparmethoden",
+          "duration": 14,
+          "isCompleted": true,
+          "isLastLesson": false,
+          "summaryCongrats": "Jede Lesson bringt dich weiter!",
+          "summaryText": "Sparmethoden – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was ist eine Sparmethode?",
+              "optionsAnswer": [
+                "Planlos ausgeben",
+                "Gezielt zurücklegen",
+                "Alles investieren"
+              ],
+              "correctAnswer": 3
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "lesson_number": 3,
+          "title": "Budgetplanung",
+          "duration": 16,
+          "isCompleted": false,
+          "isLastLesson": true,
+          "summaryCongrats": "Klick für Klick zum Money-Pro!",
+          "summaryText": "Budgetplanung – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was ist ein Budget?",
+              "optionsAnswer": [
+                "Ein Wunsch",
+                "Ein Plan",
+                "Ein Kredit"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "course_number": 3,
+      "title": "RENTE",
+      "isLastCourse": true,
+      "lessons": [
+        {
+          "id": 1,
+          "lesson_number": 1,
+          "title": "Rentenarten",
+          "duration": 10,
+          "isCompleted": false,
+          "isLastLesson": false,
+          "summaryCongrats": "Gelernt = Gewonnen. Weiter so!",
+          "summaryText": "Rentenarten – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Welche Rentenarten gibt es?",
+              "optionsAnswer": [
+                "Nur staatlich",
+                "Staatlich und privat",
+                "Keine"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "lesson_number": 2,
+          "title": "Private Vorsorge",
+          "duration": 15,
+          "isCompleted": false,
+          "isLastLesson": false,
+          "summaryCongrats": "Du bist weiter als gestern.",
+          "summaryText": "Private Vorsorge – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Warum privat vorsorgen?",
+              "optionsAnswer": [
+                "Spaß",
+                "Zusatzsicherheit",
+                "Zufall"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "lesson_number": 3,
+          "title": "Staatliche Unterstützung",
+          "duration": 12,
+          "isCompleted": false,
+          "isLastLesson": false,
+          "summaryCongrats": "Du bist weiter als gestern.",
+          "summaryText": "Staatliche Unterstützung – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Was ist staatliche Unterstützung?",
+              "optionsAnswer": [
+                "Geschenk",
+                "Förderung",
+                "Schulden"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "lesson_number": 4,
+          "title": "Planung und Tipps",
+          "duration": 20,
+          "isCompleted": false,
+          "isLastLesson": true,
+          "summaryCongrats": "Kurs durchgezogen – du bist ein Finanzen-Ninja!",
+          "summaryText": "Planung und Tipps – Lernziele erfolgreich erreicht.",
+          "quiz": [
+            {
+              "quiz_number": 1,
+              "question_number": 1,
+              "question_text": "Warum früh planen?",
+              "optionsAnswer": [
+                "Zwang",
+                "Zeitvorteil",
+                "Pflicht"
+              ],
+              "correctAnswer": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

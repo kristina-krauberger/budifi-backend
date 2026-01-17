@@ -5,4 +5,11 @@ class Course(db.Model):
     __tablename__ = "course"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    course_name = db.Column(db.String(32), nullable=False)
+    course_number = db.Column(db.Integer, nullable=False)
+    course_title = db.Column(db.String(32), nullable=False)
+    is_last_course = db.Column(db.Boolean, nullable=False)
+
+
+    # List of lessons & enrollments linked to this course (not a direct DB column, but relationship)
+    lessons = db.relationship("Lesson", backref="course", lazy=True)
+    enrollments = db.relationship("Enrollment", backref="course", lazy=True)

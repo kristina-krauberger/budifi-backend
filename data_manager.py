@@ -3,6 +3,7 @@ from models.course import Course
 from models.user import User
 from models.enrollment import Enrollment
 from datetime import datetime
+from service.data_manager.course_data_manager import CourseDataManager
 
 class DataManager:
 
@@ -54,3 +55,49 @@ class DataManager:
             "courses": courses_data
         }
         return user_dashboard_data
+
+
+    def list_courses(self):
+
+        courses = self.db.session.query(Course).all()
+        courses_data = []
+
+        for course in courses:
+            course_data = {
+                "id": course.id,
+                "course_number": course.course_number,
+                "title": course.course_title,
+                "isLastCourse": course.is_last_course,
+                "lessons": []
+            }
+
+            for lesson in sorted(course.lessons, key=lambda l: l.lesson_number):
+                lesson_data = {
+                    "id": lesson.id,
+                    "lesson_number": lesson.lesson_number,
+                    "title": lesson.title,
+                    "duration": lesson.duration,
+                    "isCompleted": lesson.is_completed,
+                    "isLastLesson": lesson.is_last_lesson,
+                    "summaryCongrats": lesson.summary_congrats,
+                    "summaryText": lesson.summary_text,
+                    "quiz": []
+                }
+
+                if lesson.quiz:
+                    questions_data = []
+                    for question in sorted(lesson.quiz.questions, key=lambda q: q.question_number):
+                        questions_data.append({
+                            "quiz_number": question.quiz.quiz_number,
+                            "question_number": question.question_number,
+                            "question_text": question.question_text,
+                            "optionsAnswer": [question.option_1, question.option_2, question.option_3],
+                            "correctAnswer": question.correct_option
+                        })
+                    lesson_data["quiz"] = questions_data
+
+                course_data["lessons"].append(lesson_data)
+
+            courses_data.append(course_data)
+
+        return {"courses": courses_data}

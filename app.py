@@ -36,25 +36,45 @@ def add_user():
 
   return jsonify({"message":"user created successfully"}), 200
 
-
-@app.route('/api/user/<int:user_id>/dashboard', methods=['GET'])
-def show_user_dashboard(user_id):
-  """Shows dashboard including user progress."""
-  user_dashboard_data = data_manager.get_current_user_dashboard(user_id)
-  return jsonify(user_dashboard_data), 200
+@app.route('/')
+def hello_world():
+  return jsonify({"message":"hello world"}), 200
 
 
+@app.route('/api/courses')
+def get_courses():
+  courses = data_manager.list_courses()
+  print(courses)
+  #hier müssen alle Kursdaten rein und die komme aus Datamanager z.
+  return jsonify({"message":courses}), 200
 
 
+
+# @app.route('/api/user/<int:user_id>/dashboard', methods=['GET'])
+# def show_user_dashboard(user_id):
+#   """Shows dashboard including user progress."""
+#   user_dashboard_data = data_manager.get_current_user_dashboard(user_id)
+#   print(user_dashboard_data)
+#   return jsonify(user_dashboard_data), 200
+#
+#
+# @app.route('/api/course', methods=['GET'])
+# def show_courses():
+#   courses = data_manager.list_courses()
+#   return jsonify(courses), 200
+#
 
 if __name__ == '__main__':
   with app.app_context():
     from models.user import User
+    from models.lesson import Lesson
+    from models.question import Question
+    from models.quiz import Quiz
     from models.course import Course
     from models.enrollment import Enrollment
     db.create_all()
 
-  app.run(host="0.0.0.0", port=5002, debug=True)
+  app.run(host="0.0.0.0", port=5003, debug=True)
 
 
 
