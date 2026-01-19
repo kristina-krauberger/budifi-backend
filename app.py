@@ -2,10 +2,12 @@ from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
 from data_manager import DataManager
 from extentions import db
+from flask_cors import CORS
 import os
 
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173"])
 bcrypt = Bcrypt(app)  # initiates bcrypt für hashing password
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -46,7 +48,7 @@ def get_courses():
   courses = data_manager.list_courses()
   print(courses)
   #hier müssen alle Kursdaten rein und die komme aus Datamanager z.
-  return jsonify({"message":courses}), 200
+  return jsonify(courses), 200
 
 
 
