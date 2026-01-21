@@ -107,8 +107,9 @@ def login():
     if not data:
         return jsonify({"error": "No JSON payload received"}), 400
     email = data.get('email')
+    user = User.query.filter_by(email=email).first()
     password = data.get('password')
-    if email and password == '123':
+    if user and bcrypt.check_password_hash(user.password, password):
         session['logged_in'] = True
         token = jwt.encode({
             'user': email,
