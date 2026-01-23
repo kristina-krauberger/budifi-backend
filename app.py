@@ -160,8 +160,18 @@ def get_courses():
     """Fetch all available courses from the database."""
     courses = data_manager.list_courses()
     print(courses)
-    # hier müssen alle Kursdaten rein und die komme aus Datamanager z.
     return jsonify(courses), 200
+
+
+
+# @app.route('/api/user/<int:user_id>/course/<int:course_id>/progress')
+@app.route('/api/user/<int:user_id>/progress')
+def get_progress_for_user(user_id):
+    """Fetch progress for user from the database."""
+    progress = data_manager.list_lesson_progress(user_id)
+    print(progress)
+    return jsonify(progress)
+
 
 
 # @app.route('/api/signup', methods=['POST'])
@@ -199,7 +209,7 @@ if __name__ == '__main__':
         from models.question import Question
         from models.quiz import Quiz
         from models.course import Course
-        from models.enrollment import Enrollment
+        from models.lesson_progress import LessonProgress
 
         db.create_all()
 

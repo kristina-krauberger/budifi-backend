@@ -6,7 +6,7 @@ from models.question import Question
 from extentions import db
 from app import app
 
-with open("seed/course.mock.json", "r") as file:
+with open("mockdata/course.mock.json", "r") as file:
     data = json.load(file)
 
 with app.app_context():
@@ -65,4 +65,4 @@ with app.app_context():
                 db.session.add(question)
 
     db.session.commit()
-    print("Seeding completed successfully.")
+    print("Importing completed successfully.")

@@ -10,6 +10,5 @@ class Course(db.Model):
     is_last_course = db.Column(db.Boolean, nullable=False)
 
 
-    # List of lessons & enrollments linked to this course (not a direct DB column, but relationship)
+    # List of lessons, enrollments and progresses linked to this course (not a direct DB column, but relationship)
     lessons = db.relationship("Lesson", backref="course", lazy=True)
-    enrollments = db.relationship("Enrollment", backref="course", lazy=True)

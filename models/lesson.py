@@ -15,6 +15,7 @@ class Lesson(db.Model):
 
     # Each lesson has one quiz (1:1 relationship)
     quiz = db.relationship("Quiz", backref="lesson", uselist=False)
+    lesson_progress = db.relationship("LessonProgress", backref="lesson", uselist=False)
 
     def __repr__(self):
         return f"<Lesson {self.title}>"

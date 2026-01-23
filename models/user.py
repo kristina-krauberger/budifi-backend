@@ -10,8 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(32), nullable=False, unique=True)  #unique kein zweiter user kann sich damit anmelden
     password = db.Column(db.String(32), nullable=False)
 
-    # List of enrollments for this user (not a direct DB column, but relationship)
-    enrollments = db.relationship("Enrollment", backref="user", lazy=True)
+    # List of enrollments and progresses for this user (not a direct DB column, but relationship)
+    lesson_progress = db.relationship("LessonProgress", backref="user", lazy=True)
 
 
 
