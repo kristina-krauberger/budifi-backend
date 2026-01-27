@@ -29,7 +29,7 @@ class DataManager:
 
         for course in courses:
             course_data = {
-                "id": course.id,
+                "course_id": course.id,
                 "course_number": course.course_number,
                 "title": course.course_title,
                 "isLastCourse": course.is_last_course,
@@ -38,7 +38,7 @@ class DataManager:
 
             for lesson in sorted(course.lessons, key=lambda l: l.lesson_number):
                 lesson_data = {
-                    "id": lesson.id,
+                    "lesson_id": lesson.id,
                     "lesson_number": lesson.lesson_number,
                     "title": lesson.title,
                     "duration": lesson.duration,
