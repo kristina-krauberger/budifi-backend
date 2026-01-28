@@ -58,7 +58,7 @@ def token_required(func):
             return jsonify({'Alert': 'Token is missing'})
         try:
             payload = jwt.decode(token, app.config['SECRET_KEY'], algorithm='HS256')
-            # current_user = payload['user']
+            #current_user_email = payload['user']
             # TODO: später unten das anpassen: return func(current_user, *args, **kwargs)
             # TODO: später unten das anpassen:
             # @token_required
@@ -112,6 +112,7 @@ def login():
     if user and bcrypt.check_password_hash(user.password, password):
         session['logged_in'] = True
         token = jwt.encode({
+            'user_id': user.id,
             'user': email,
             'expiration': str(datetime.utcnow() + timedelta(seconds=120))
         },
@@ -155,23 +156,38 @@ def me():
     }), 200
 
 
-@app.route('/api/courses')
+@app.route('/api/courses', methods=['GET'])
 def get_courses():
     """Fetch all available courses from the database."""
     courses = data_manager.list_courses()
-    print(courses)
     return jsonify(courses), 200
 
 
-
 # @app.route('/api/user/<int:user_id>/course/<int:course_id>/progress')
-@app.route('/api/user/<int:user_id>/progress')
+@app.route('/api/user/<int:user_id>/progress', methods=['GET'])
 def get_progress_for_user(user_id):
     """Fetch progress for user from the database."""
     progress = data_manager.list_lesson_progress(user_id)
-    print(progress)
     return jsonify(progress)
 
+
+@app.route('/api/user/<int:user_id>/progress', methods=['PUT'])
+def update_progress_for_user(user_id):
+    """
+    Updates lesson progress for a specific user.
+    Expects JSON payload containing lesson_id and is_completed flag.
+    Writes updated progress state (is_completed) to the database.
+    """
+    data = request.get_json()
+    lesson_id = data.get('lesson_id', 'N/A')
+    is_completed = data.get('is_completed', 'false')
+    data_manager.update_lesson_progress(user_id, lesson_id, is_completed)
+
+    return jsonify({
+        "user_id": user_id,
+        "lesson_id": lesson_id,
+        "is_completed": is_completed
+    }), 200
 
 
 # @app.route('/api/signup', methods=['POST'])
@@ -192,14 +208,6 @@ def get_progress_for_user(user_id):
 #     data_manager.create_user(new_user)
 #
 #     return jsonify({"message": "user created successfully"}), 200
-
-
-# @app.route('/api/user/<int:user_id>/dashboard', methods=['GET'])
-# def show_user_dashboard(user_id):
-#   """Shows dashboard including user progress."""
-#   user_dashboard_data = data_manager.get_current_user_dashboard(user_id)
-#   print(user_dashboard_data)
-#   return jsonify(user_dashboard_data), 200
 
 
 if __name__ == '__main__':
