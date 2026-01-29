@@ -74,31 +74,6 @@ def token_required(func):
     return decorated
 
 
-# Home
-@app.route('/')
-def home():
-    """Root home route – returns login page or login status."""
-    if not session.get('logged_in'):
-        return render_template('login.html'), 200
-    else:
-        return jsonify('Logged in currently!'), 200
-
-
-# Public Area
-@app.route('/public')
-def public():
-    """Public route – accessible without authentication."""
-    return 'For Public'
-
-
-# Protected Area → Authenticated
-@app.route('/auth')
-@token_required
-def auth():
-    """Protected route – requires JWT token to access."""
-    return 'JWT is verified. Welcome to your dashboard!'
-
-
 # Login
 @app.route('/login', methods=['POST'])
 def login():
