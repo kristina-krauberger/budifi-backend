@@ -12,14 +12,29 @@ class DataManager:
 
 
     def create_user(self, user: User):
-        """Creates a new user with the given user data. Returns error message if input is invalid."""
+        """Creates a new user with the given user data and initializes their lesson progress
+        Returns error message if input is invalid."""
         try:
             self.db.session.add(user)
             self.db.session.commit()
+            self.create_lesson_progress_for_user(user)
             return None
         except Exception as e:          #TODO: später "Exception" entfernen
-            print(f"❌ Fehler beim Speichern des Users: {e}")
+            print(f"❌ Error while saving new user to database: {e}")
             return f"{e}"
+
+
+    def create_lesson_progress_for_user(self, user):
+        """Creates a progress entry for each lesson for the given user."""
+        lessons = self.db.session.query(Lesson).all()
+        for lesson in lessons:
+            new_progress = LessonProgress(
+                user_id=user.id,
+                lesson_id=lesson.id,
+                is_completed=0
+            )
+            self.db.session.add(new_progress)
+            self.db.session.commit()
 
 
     def list_courses(self):

@@ -2,7 +2,7 @@
 from email.policy import default
 
 from extentions import db
-from datetime import datetime
+from datetime import date
 
 class LessonProgress(db.Model):
     """Database for enrollment & progress model."""
@@ -12,7 +12,7 @@ class LessonProgress(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     lesson_id = db.Column(db.Integer, db.ForeignKey("lesson.id"))
     is_completed = db.Column(db.Integer, nullable=False, default=0)
-    enrolled_at = db.Column(db.DateTime, default=datetime.utcnow)
+    enrolled_at = db.Column(db.Date, default=date.today)
 
 
 
