@@ -13,12 +13,12 @@ class DataManager:
 
     def create_user(self, user: User):
         """Creates a new user with the given user data. Returns error message if input is invalid."""
-
         try:
             self.db.session.add(user)
             self.db.session.commit()
             return None
         except Exception as e:          #TODO: später "Exception" entfernen
+            print(f"❌ Fehler beim Speichern des Users: {e}")
             return f"{e}"
 
 
@@ -121,3 +121,20 @@ class DataManager:
         )
         lesson_progress_to_update.is_completed = is_completed
         self.db.session.commit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

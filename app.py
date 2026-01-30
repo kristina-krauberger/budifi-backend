@@ -75,7 +75,7 @@ def token_required(func):
 
 
 # Login
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     """Login route – verifies credentials and returns JWT token."""
     data = request.get_json()
@@ -99,7 +99,7 @@ def login():
 
 
 # Logged in User
-@app.route('/me', methods=['GET'])
+@app.route('/api/me', methods=['GET'])
 def me():
     """
     Returns current logged-in user details from JWT token.
@@ -165,24 +165,27 @@ def update_progress_for_user(user_id):
     }), 200
 
 
-# @app.route('/api/signup', methods=['POST'])
-# def add_user():
-#     """Adds a new user to the database from form input."""
-#     data = request.get_json()
-#     first_name = data.get('first_name')
-#     last_name = data.get('last_name')
-#     email = data.get('email')
-#     password = data.get('password')
-#     hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-#     new_user = User(
-#         first_name=first_name,
-#         last_name=last_name,
-#         email=email,
-#         password=hashed_password)
-#
-#     data_manager.create_user(new_user)
-#
-#     return jsonify({"message": "user created successfully"}), 200
+@app.route('/api/register', methods=['POST'])
+def create_user():
+    """Adds a new user to the database from form input."""
+    data = request.get_json()
+    print("📩 REGISTER HIT")
+    print(data)
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    email = data.get('email')
+    password = data.get('password')
+    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+    new_user = User(
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        password=hashed_password)
+
+    data_manager.create_user(new_user)
+
+    print("✅ USER CREATED:", new_user.email)
+    return jsonify({"message": "user created successfully"}), 200
 
 
 if __name__ == '__main__':
