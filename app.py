@@ -134,15 +134,14 @@ def me():
 @app.route('/api/courses', methods=['GET'])
 def get_courses():
     """Fetch all available courses from the database."""
-    courses = data_manager.list_courses()
+    courses = data_manager.get_courses()
     return jsonify(courses), 200
 
 
-# @app.route('/api/user/<int:user_id>/course/<int:course_id>/progress')
 @app.route('/api/user/<int:user_id>/progress', methods=['GET'])
 def get_progress_for_user(user_id):
     """Fetch progress for user from the database."""
-    progress = data_manager.list_lesson_progress(user_id)
+    progress = data_manager.get_lesson_progress(user_id)
     return jsonify(progress)
 
 
@@ -176,13 +175,17 @@ def create_user():
     email = data.get('email')
     password = data.get('password')
     hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-    new_user = User(
-        first_name=first_name,
-        last_name=last_name,
-        email=email,
-        password=hashed_password)
+    existing_user = data_manager.get_user_by_email(email)
+    if existing_user:
+        return jsonify({"error": "Email already registered"}), 409
+    else:
+        new_user = User(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            password=hashed_password)
 
-    data_manager.create_user(new_user)
+        data_manager.create_user(new_user)
 
     print("✅ USER CREATED:", new_user.email)
     return jsonify({"message": "user created successfully"}), 200

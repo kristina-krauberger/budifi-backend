@@ -37,7 +37,7 @@ class DataManager:
             self.db.session.commit()
 
 
-    def list_courses(self):
+    def get_courses(self):
         """Returns a list of all courses with nested lesson and quiz data."""
         courses = self.db.session.query(Course).all()
         courses_data = []
@@ -83,7 +83,7 @@ class DataManager:
         return {"courses": courses_data}
 
 
-    def list_lesson_progress(self, user_id):
+    def get_lesson_progress(self, user_id):
         """Returns the lesson progress for a specific user.
         Includes completed lessons and the completion percentage per course."""
         lesson_progress = self.db.session.query(
@@ -124,6 +124,11 @@ class DataManager:
                 course["completed_percentage"] = int((completed / total) * 100) if total > 0 else 0
 
         return {"courses": courses_progress}
+
+
+    def get_user_by_email(self, email):
+        """Returns user by email or None if not found."""
+        return self.db.session.query(User).filter_by(email=email).first()
 
 
     def update_lesson_progress(self, user_id, lesson_id, is_completed):
