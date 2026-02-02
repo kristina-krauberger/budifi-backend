@@ -74,6 +74,12 @@ def token_required(func):
     return decorated
 
 
+@app.route('/api/health', methods=['GET'])
+def health_track():
+    return {"status": "ok"}
+
+
+
 # Login
 @app.route('/api/login', methods=['POST'])
 def login():
