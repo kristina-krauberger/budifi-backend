@@ -24,9 +24,9 @@ from dotenv import load_dotenv
 import os
 import jwt
 
-# Initialize Flask app and allow CORS for local frontend dev
+# Initialize Flask app and allow CORS for local (localhost) and deployed (vercel.app) frontend
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])  # TODO: Replace with prod URL after deployment
+CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app/"])
 
 # Set database path using absolute project path (safe for deployment)
 basedir = os.path.abspath(os.path.dirname(__file__))
