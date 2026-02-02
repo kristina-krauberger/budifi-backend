@@ -17,27 +17,27 @@ Provides routes for:
 from flask import Flask, request, jsonify, make_response, render_template, session
 from datetime import datetime, timedelta
 from functools import wraps
-from flask_bcrypt import Bcrypt
 from data_manager import DataManager
-from extentions import db
+from extentions import db, bcrypt
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 import jwt
 
-# App initialization
+# Initialize Flask app and allow CORS for local frontend dev
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])
-bcrypt = Bcrypt(app)  # initiates bcrypt für hashing password
+CORS(app, origins=["http://localhost:5173"])  # TODO: Replace with prod URL after deployment
 
+# Set database path using absolute project path (safe for deployment)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/budifi.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-load_dotenv()
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+load_dotenv() # Load environment variables from .env
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY") # Used for JWT encoding/decoding
 
 db.init_app(app)  # Links the database and the App
+bcrypt.init_app(app)
 
 data_manager = DataManager(db)  # Creates an object of your DataManager Class
 
@@ -192,6 +192,7 @@ def create_user():
 
 
 if __name__ == '__main__':
+    # Create all tables when running app directly (for local development)
     with app.app_context():
         from models.user import User
         from models.lesson import Lesson
