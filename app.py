@@ -37,7 +37,7 @@ database_url = os.environ.get("DATABASE_URL")
 if database_url.startswith("sqlite:///data"):
     basedir = os.path.abspath(os.path.dirname(__file__))
     database_url = f"sqlite:///{os.path.join(basedir, 'data/budifi.db')}"
-
+print("📦 DATABASE_URL:", database_url)
 
 # Apply the final database URL to the Flask app config
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
@@ -88,7 +88,6 @@ def health_track():
     return {"status": "ok"}
 
 
-
 # Login
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -125,16 +124,16 @@ def me():
     auth_header = request.headers.get("Authorization")
 
     if not auth_header or not auth_header.startswith("Bearer "):
-        return jsonify({"error": "Missing or invalid token"}), 401
+        return jsonify({"error": "You must be logged in to access this resource."}), 401
 
     token = auth_header.split(" ")[1]
     try:
         payload = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
         email = payload.get("user")
     except jwt.ExpiredSignatureError:
-        return jsonify({"error": "Token expired"}), 403
+        return jsonify({"error": "Your session has expired. Please log in again."}), 403
     except jwt.InvalidTokenError:
-        return jsonify({"error": "Invalid token"}), 403
+        return jsonify({"error": "Invalid token. Authentication failed."}), 403
     user = User.query.filter_by(email=email).first()
     if not user:
         return jsonify({"error": "User not found"}), 404
