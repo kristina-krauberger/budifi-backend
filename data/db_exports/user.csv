@@ -1,0 +1,4 @@
+id,first_name,last_name,email,password
+1,Kristina,test,test@gmail.com,$2b$12$08Rks9JMt8KcfHykjjm4FOoT1dVFv9v/qZp1bq4UztCnAB0Om4VuG
+2,Erika,test,erika@gmail.com,$2b$12$BYQ.WfvIQATWnDWKziWbIOSB1cLP32ORFwxHjcZdztMY5UqYnP0G2
+3,Max,Mustermann,max@gmail.com,$2b$12$t3gWdwdD1/TsxPGLuebJGeJZ0nbQ7Xhl4mlqnkTyk85MeG9rGLofu

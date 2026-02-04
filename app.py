@@ -14,7 +14,7 @@ Provides routes for:
 - fetching course data
 """
 
-from flask import Flask, request, jsonify, make_response, render_template, session
+from flask import Flask, request, jsonify, make_response, session
 from datetime import datetime, timedelta
 from functools import wraps
 from data_manager import DataManager
@@ -26,14 +26,23 @@ import jwt
 
 # Initialize Flask app and allow CORS for local (localhost) and deployed (vercel.app) frontend
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app/"])
+CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app"])
+
+load_dotenv()  # Load environment variables from the .env file
 
 # Set database path using absolute project path (safe for deployment)
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/budifi.db')}"
+database_url = os.environ.get("DATABASE_URL")
+
+# If using a relative SQLite path, convert it to an absolute path
+if database_url.startswith("sqlite:///data"):
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    database_url = f"sqlite:///{os.path.join(basedir, 'data/budifi.db')}"
+
+
+# Apply the final database URL to the Flask app config
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-load_dotenv() # Load environment variables from .env
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY") # Used for JWT encoding/decoding
 
 db.init_app(app)  # Links the database and the App

@@ -1,0 +1,13 @@
+id,lesson_number,course_id,title,duration,is_completed,is_last_lesson,summary_congrats,summary_text
+1,1,1,Was ist Investieren?,10,1,0,Stark! Die erste Lesson geschafft.,Was ist Investieren? – Lernziele erfolgreich erreicht.
+2,2,1,Aktien und Anleihen,15,1,0,Dranbleiben zahlt sich aus!,Aktien und Anleihen – Lernziele erfolgreich erreicht.
+3,3,1,Investmentfonds,12,1,0,Nice! Du wächst mit jedem Schritt.,Investmentfonds – Lernziele erfolgreich erreicht.
+4,4,1,Risiken verstehen,20,1,0,Yes! Du bist im Flow.,Risiken verstehen – Lernziele erfolgreich erreicht.
+5,5,1,Langfristige Strategien,18,1,1,Routine beats Motivation – und du hast beides!,Langfristige Strategien – Lernziele erfolgreich erreicht.
+6,1,2,Warum sparen?,8,1,0,"Heute eine, morgen die Welt!",Warum sparen? – Lernziele erfolgreich erreicht.
+7,2,2,Sparmethoden,14,1,0,Jede Lesson bringt dich weiter!,Sparmethoden – Lernziele erfolgreich erreicht.
+8,3,2,Budgetplanung,16,0,1,Klick für Klick zum Money-Pro!,Budgetplanung – Lernziele erfolgreich erreicht.
+9,1,3,Rentenarten,10,0,0,Gelernt = Gewonnen. Weiter so!,Rentenarten – Lernziele erfolgreich erreicht.
+10,2,3,Private Vorsorge,15,0,0,Du bist weiter als gestern.,Private Vorsorge – Lernziele erfolgreich erreicht.
+11,3,3,Staatliche Unterstützung,12,0,0,Du bist weiter als gestern.,Staatliche Unterstützung – Lernziele erfolgreich erreicht.
+12,4,3,Planung und Tipps,20,0,1,Kurs durchgezogen – du bist ein Finanzen-Ninja!,Planung und Tipps – Lernziele erfolgreich erreicht.
