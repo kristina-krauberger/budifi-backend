@@ -32,12 +32,12 @@ load_dotenv()  # Load environment variables from the .env file
 
 # Set database path using absolute project path (safe for deployment)
 database_url = os.environ.get("DATABASE_URL")
+print("📦 DATABASE_URL:", database_url)
 
 # If using a relative SQLite path, convert it to an absolute path
 if database_url.startswith("sqlite:///data"):
     basedir = os.path.abspath(os.path.dirname(__file__))
     database_url = f"sqlite:///{os.path.join(basedir, 'data/budifi.db')}"
-print("📦 DATABASE_URL:", database_url)
 
 # Apply the final database URL to the Flask app config
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
