@@ -209,11 +209,7 @@ if __name__ == '__main__':
     # Create all tables when running app directly (for local development)
     with app.app_context():
         from models.user import User
-        from models.lesson import Lesson
-        from models.question import Question
-        from models.quiz import Quiz
-        from models.course import Course
-        from models.lesson_progress import LessonProgress
+
 
         db.create_all()
 
