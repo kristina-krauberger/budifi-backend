@@ -18,6 +18,7 @@ from flask import Flask, request, jsonify, make_response, session
 from datetime import datetime, timedelta
 from functools import wraps
 from data_manager import DataManager
+from models import User
 from extentions import db, bcrypt
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -208,9 +209,6 @@ def create_user():
 if __name__ == '__main__':
     # Create all tables when running app directly (for local development)
     with app.app_context():
-        from models.user import User
-
-
         db.create_all()
 
     app.run(host="0.0.0.0", port=5003, debug=True)
