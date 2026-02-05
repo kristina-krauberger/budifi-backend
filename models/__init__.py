@@ -1,4 +1,4 @@
-from lesson import Lesson
-from quiz import Quiz
+from .lesson import Lesson
+from .quiz import Quiz
 
 
