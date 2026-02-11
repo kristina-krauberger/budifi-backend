@@ -27,13 +27,12 @@ import jwt
 
 # Initialize Flask app and allow CORS for local (localhost) and deployed (vercel.app) frontend
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app"])
+CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app", "http://localhost:5174"])
 
 load_dotenv()  # Load environment variables from the .env file
 
 # Set database path using absolute project path (safe for deployment)
 database_url = os.environ.get("DATABASE_URL")
-print("📦 DATABASE_URL:", database_url)
 
 # If using a relative SQLite path, convert it to an absolute path
 if database_url.startswith("sqlite:///data"):
@@ -64,6 +63,7 @@ def token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
         token = request.args.get('token')
+        #token nicht über params übergibt sondern über authentication
         if not token:
             return jsonify({'Alert': 'Token is missing'})
         try:
@@ -145,7 +145,6 @@ def me():
         "email": user.email
     }), 200
 
-
 @app.route('/api/courses', methods=['GET'])
 def get_courses():
     """Fetch all available courses from the database."""
@@ -202,7 +201,7 @@ def create_user():
 
         data_manager.create_user(new_user)
 
-    print("✅ USER CREATED:", new_user.email)
+    print("✅ USER CREATED")
     return jsonify({"message": "user created successfully"}), 200
 
 
