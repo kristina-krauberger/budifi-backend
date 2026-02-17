@@ -27,7 +27,7 @@ import jwt
 
 # Initialize Flask app and allow CORS for local (localhost) and deployed (vercel.app) frontend
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app", "http://localhost:5174"])
+CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app", "http://localhost:5174", "http://127.0.0.1:5173"])
 
 load_dotenv()  # Load environment variables from the .env file
 
