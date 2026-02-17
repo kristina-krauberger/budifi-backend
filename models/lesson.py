@@ -8,7 +8,6 @@ class Lesson(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey("course.id"))
     title = db.Column(db.String(255), nullable=False)
     duration = db.Column(db.Integer)
-    is_completed = db.Column(db.Boolean, default=False)
     is_last_lesson = db.Column(db.Boolean, default=False)
     summary_congrats = db.Column(db.Text, nullable=False)
     summary_text = db.Column(db.Text, nullable=False)

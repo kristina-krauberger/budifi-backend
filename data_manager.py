@@ -57,7 +57,6 @@ class DataManager:
                     "lesson_number": lesson.lesson_number,
                     "title": lesson.title,
                     "duration": lesson.duration,
-                    "isCompleted": lesson.is_completed,
                     "isLastLesson": lesson.is_last_lesson,
                     "summaryCongrats": lesson.summary_congrats,
                     "summaryText": lesson.summary_text,
