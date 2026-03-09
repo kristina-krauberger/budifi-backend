@@ -22,6 +22,7 @@ from models import User
 from extentions import db, bcrypt
 from flask_cors import CORS
 from dotenv import load_dotenv
+from openai import OpenAI
 import os
 import jwt
 
@@ -50,6 +51,8 @@ bcrypt.init_app(app)
 
 data_manager = DataManager(db)  # Creates an object of your DataManager Class
 
+OPENAI_API_KEY = os.getenv("SECRET_KEY_OPENAI")
+client = OpenAI(api_key=OPENAI_API_KEY)  # Creates OpenAI Client
 
 def token_required(func):
     """
@@ -205,9 +208,24 @@ def create_user():
     return jsonify({"message": "user created successfully"}), 200
 
 
+@app.route('/api/faq', methods=['POST'])
+def generate_ai_response():
+    data = request.get_json()
+    user_prompt = data.get("user_prompt")
+    response = client.responses.create(
+        model="gpt-4.1",
+        input=[
+            {"role": "system", "content": "Bitte antworte immer auf deutsch."},
+            {"role": "user", "content": user_prompt}],
+        max_output_tokens=50,
+        temperature=0
+    )
+    return response.output_text
+
+
 if __name__ == '__main__':
     # Create all tables when running app directly (for local development)
     with app.app_context():
         db.create_all()
 
-    app.run(host="0.0.0.0", port=5003, debug=True)
+    app.run(host="0.0.0.0", port=5003, debug=False)
