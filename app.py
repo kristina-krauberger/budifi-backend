@@ -28,7 +28,8 @@ import jwt
 
 # Initialize Flask app and allow CORS for local (localhost) and deployed (vercel.app) frontend
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app", "http://localhost:5174", "http://127.0.0.1:5173"])
+CORS(app, origins=["http://localhost:5173", "https://buddyfi-2.vercel.app", "http://localhost:5174",
+                   "http://127.0.0.1:5173"])
 
 load_dotenv()  # Load environment variables from the .env file
 
@@ -44,7 +45,7 @@ if database_url.startswith("sqlite:///data"):
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY") # Used for JWT encoding/decoding
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")  # Used for JWT encoding/decoding
 
 db.init_app(app)  # Links the database and the App
 bcrypt.init_app(app)
@@ -53,6 +54,7 @@ data_manager = DataManager(db)  # Creates an object of your DataManager Class
 
 OPENAI_API_KEY = os.getenv("SECRET_KEY_OPENAI")
 client = OpenAI(api_key=OPENAI_API_KEY)  # Creates OpenAI Client
+
 
 def token_required(func):
     """
@@ -65,29 +67,27 @@ def token_required(func):
 
     @wraps(func)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
-        #token nicht über params übergibt sondern über authentication
-        if not token:
-            return jsonify({'Alert': 'Token is missing'})
+        auth_header = request.headers.get("Authorization")
+
+        if not auth_header or not auth_header.startswith("Bearer "):
+            return jsonify({"error": "Token is missing"}), 401
+
+        token = auth_header.split(" ")[1]
+
         try:
-            payload = jwt.decode(token, app.config['SECRET_KEY'], algorithm='HS256')
-            #current_user_email = payload['user']
-            # TODO: später unten das anpassen: return func(current_user, *args, **kwargs)
-            # TODO: später unten das anpassen:
-            # @token_required
-            # def get_progress(current_user):
-            #     return f"Progress for user: {current_user}"
+            payload = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            current_user_id = payload.get("user_id")
         except jwt.ExpiredSignatureError:
-            return jsonify({'Alert!': 'Token expired'}), 403
+            return jsonify({"error": "Token expired"}), 401
         except jwt.InvalidTokenError:
-            return jsonify({'Alert!': 'Invalid token'}), 403
+            return jsonify({"error": "Invalid token"}), 401
 
         return func(*args, **kwargs)
 
     return decorated
 
-
 @app.route('/api/health', methods=['GET'])
+@token_required
 def health_track():
     return {"status": "ok"}
 
@@ -147,6 +147,7 @@ def me():
         "last_name": user.last_name,
         "email": user.email
     }), 200
+
 
 @app.route('/api/courses', methods=['GET'])
 def get_courses():
