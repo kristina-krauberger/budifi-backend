@@ -87,7 +87,6 @@ def token_required(func):
     return decorated
 
 @app.route('/api/health', methods=['GET'])
-@token_required
 def health_track():
     return {"status": "ok"}
 
@@ -150,6 +149,7 @@ def me():
 
 
 @app.route('/api/courses', methods=['GET'])
+@token_required
 def get_courses():
     """Fetch all available courses from the database."""
     courses = data_manager.get_courses()
@@ -157,6 +157,7 @@ def get_courses():
 
 
 @app.route('/api/user/<int:user_id>/progress', methods=['GET'])
+@token_required
 def get_progress_for_user(user_id):
     """Fetch progress for user from the database."""
     progress = data_manager.get_lesson_progress(user_id)
@@ -164,6 +165,7 @@ def get_progress_for_user(user_id):
 
 
 @app.route('/api/user/<int:user_id>/progress', methods=['PUT'])
+@token_required
 def update_progress_for_user(user_id):
     """
     Updates lesson progress for a specific user.
