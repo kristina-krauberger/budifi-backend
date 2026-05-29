@@ -51,17 +51,27 @@ This structure enables scalable course management and persistent progress tracki
 
 ---
 
-## Endpoints
+## API Endpoints
 
-| Endpoint | Method | Description |
-|----------|---------|-------------|
-| /api/health | GET | Check backend status |
-| /api/register | POST | Register new user |
-| /api/login | POST | Login and receive JWT token |
-| /api/me | GET | Get current authenticated user |
-| /api/courses | GET | Retrieve all courses |
-| /api/user/<int:user_id>/progress | GET | Get lesson progress |
-| /api/user/<int:user_id>/progress | PUT | Update lesson progress |
+### Authentication
+
+POST `/api/register` – Register a new user
+
+POST `/api/login` – Authenticate user and return JWT token
+
+GET `/api/me` – Retrieve current authenticated user
+
+### Courses & Progress
+
+GET `/api/courses` – Retrieve all available courses
+
+GET `/api/user/<int:user_id>/progress` – Get lesson progress for a user
+
+PUT `/api/user/<int:user_id>/progress` – Update lesson completion status
+
+### System
+
+GET `/api/health` – Backend health check
 
 ---
 
