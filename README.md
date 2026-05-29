@@ -101,17 +101,9 @@ Authorization: Bearer <your_token_here>
 
 ## Deployment
 
-### Frontend
-
-https://buddyfi-2.vercel.app/
-
-### Backend API
-
-https://buddyfi-backend.onrender.com/
-
-### Money Compass API
-
-https://money-compass-api.onrender.com/
+- Frontend: https://buddyfi-2.vercel.app/
+- Backend API: https://buddyfi-backend.onrender.com/
+- Money Compass API: https://money-compass-api.onrender.com/
 
 The Buddy.Fi ecosystem is deployed across multiple services:
 
