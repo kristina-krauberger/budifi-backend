@@ -53,25 +53,17 @@ This structure enables scalable course management and persistent progress tracki
 
 ## API Endpoints
 
-### Authentication
+```text
+POST   /api/register
+POST   /api/login
+GET    /api/me
 
-POST `/api/register` – Register a new user
+GET    /api/courses
+GET    /api/user/<int:user_id>/progress
+PUT    /api/user/<int:user_id>/progress
 
-POST `/api/login` – Authenticate user and return JWT token
-
-GET `/api/me` – Retrieve current authenticated user
-
-### Courses & Progress
-
-GET `/api/courses` – Retrieve all available courses
-
-GET `/api/user/<int:user_id>/progress` – Get lesson progress for a user
-
-PUT `/api/user/<int:user_id>/progress` – Update lesson completion status
-
-### System
-
-GET `/api/health` – Backend health check
+GET    /api/health
+```
 
 ---
 
@@ -79,21 +71,25 @@ GET `/api/health` – Backend health check
 
 JWT-based authentication is implemented for protected application routes.
 
-Protected endpoints include:
+### Protected Routes
 
-- `GET /api/me`
-- `GET /api/courses`
-- `GET /api/user/<int:user_id>/progress`
-- `PUT /api/user/<int:user_id>/progress`
+```text
+GET    /api/me
+GET    /api/courses
+GET    /api/user/<int:user_id>/progress
+PUT    /api/user/<int:user_id>/progress
+```
 
 Authentication is enforced through JWT validation before granting access to protected resources.
 
 ### Authentication Flow
 
-1. User logs in via `POST /api/login`
+```text
+1. User logs in via POST /api/login
 2. Backend returns a JWT token
-3. Client sends the token in the `Authorization` header
+3. Client sends the token in the Authorization header
 4. Protected routes validate the token before processing requests
+```
 
 Example:
 
