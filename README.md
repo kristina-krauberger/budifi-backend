@@ -71,23 +71,25 @@ JWT-based authentication is implemented for protected application routes.
 
 Protected endpoints include:
 
-- GET /api/me
-- GET /api/courses
-- GET /api/user/<int:user_id>/progress
-- PUT /api/user/<int:user_id>/progress
+- `GET /api/me`
+- `GET /api/courses`
+- `GET /api/user/<int:user_id>/progress`
+- `PUT /api/user/<int:user_id>/progress`
 
 Authentication is enforced through JWT validation before granting access to protected resources.
 
 ### Authentication Flow
 
-1. User logs in via POST /api/login
+1. User logs in via `POST /api/login`
 2. Backend returns a JWT token
-3. Client sends the token in the Authorization header
+3. Client sends the token in the `Authorization` header
 4. Protected routes validate the token before processing requests
 
 Example:
 
-http Authorization: Bearer <your_token_here> 
+```http
+Authorization: Bearer <your_token_here>
+```
 
 ---
 
@@ -121,25 +123,58 @@ This architecture separates frontend, backend, AI services, database, and media 
 
 Install dependencies:
 
-bash pip install -r requirements.txt 
+```bash
+pip install -r requirements.txt
+```
 
-Create a .env file:
+Create a `.env` file:
 
-dotenv SECRET_KEY=your-secret-key DATABASE_URL=sqlite:///data/budifi.db 
+```dotenv
+SECRET_KEY=your-secret-key
+DATABASE_URL=sqlite:///data/budifi.db
+```
 
 Start the server:
 
-bash python3 app.py 
+```bash
+python3 app.py
+```
 
 The API will be available at:
 
-text http://localhost:5003 
+```text
+http://localhost:5003
+```
 
 ---
 
 ## Project Structure
 
-text budifi-backend/ │ ├── app.py ├── data_manager.py ├── extentions.py ├── requirements.txt ├── .env │ ├── data/ │   ├── budifi.db │   └── db_exports/ │ ├── mockdata/ │   ├── course.mock.json │   └── data_import.py │ ├── models/ │   ├── user.py │   ├── course.py │   ├── lesson.py │   ├── lesson_progress.py │   ├── quiz.py │   └── question.py │ └── service/     └── data_manager/         └── course_data_manager.py 
+```text
+budifi-backend/
+│
+├── app.py
+├── data_manager.py
+├── extentions.py
+├── requirements.txt
+├── .env
+│
+├── data/
+│   ├── budifi.db
+│   └── db_exports/
+│
+├── mockdata/
+│   ├── course.mock.json
+│   └── data_import.py
+│
+├── models/
+│   ├── user.py
+│   ├── course.py
+│   ├── lesson.py
+│   ├── lesson_progress.py
+│   ├── quiz.py
+│   └── question.py
+```
 
 ---
 
