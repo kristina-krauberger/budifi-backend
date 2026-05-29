@@ -105,6 +105,7 @@ Authorization: Bearer <your_token_here>
 - Backend API: https://buddyfi-backend.onrender.com/
 - Money Compass API: https://money-compass-api.onrender.com/
 
+
 The Buddy.Fi ecosystem is deployed across multiple services:
 
 - Frontend hosted on Vercel
