@@ -1,184 +1,165 @@
-# BudyFi Backend
+# Buddy.Fi Backend
 
-## Overview
-This is the backend for **Buddy.Fi**, a microlearning finance app built with **Flask** and **SQLAlchemy**.  
-It manages user registration, login, course data, and individual lesson progress.
+Flask-based REST API powering the Buddy.Fi learning platform.
+
+The backend handles JWT authentication, course management, lesson progression, user-specific progress tracking, and relational data persistence using SQLAlchemy ORM across SQLite (local development) and PostgreSQL/Supabase (cloud deployment).
+
+---
+
+## Architecture Overview
+
+<img src="./assets/app_flow_v1.png" alt="App Flow" width="100%">
+
+The backend powers authentication, course management, lesson progression, and user-specific learning progress through a RESTful API architecture.
+
+---
+
+## Data Model
+
+<img src="./assets/er_diagramm_v3.png" alt="ER Diagram" width="100%">
+
+The application uses a relational database design built with SQLAlchemy ORM.
+
+Core entities include:
+
+- User
+- Course
+- Lesson
+- Quiz
+- Question
+- LessonProgress
+
+This structure enables scalable course management and persistent progress tracking.
+
+### Key Relationships
+
+- LessonProgress stores lesson completion state per user
+- Quiz is linked 1:1 to a Lesson
+- Question is prepared for future quiz expansion
 
 ---
 
 ## Features
 
-- User registration and login with JWT token authentication
-- Get current user session data
-- View all available courses
-- Track progress for individual lessons (per user)
-- Store completed lessons
-- Secure API endpoints via token-based auth
+- User registration and login with JWT authentication
+- Protected API routes using a custom JWT decorator
+- User session retrieval via token validation
+- Dynamic course retrieval from the database
+- User-specific lesson progress tracking
+- Persistent learning progress storage
+- RESTful API architecture
 
 ---
 
-##  Project Structure
+## Endpoints
 
-```
-budifi-backend/
-│
-├── app.py                         # Main Flask application (entry point)
-├── data_manager.py                # Central data access logic
-├── extentions.py                  # Flask extensions (DB, bcrypt initialization)
-├── requirements.txt               # Python dependencies
-├── .env                           # Environment variables (JWT secret, DB path)
-├── .gitignore
-├── README.md
-│
-├── assets/                        # Diagrams & documentation screenshots
-│
-├── data/
-│   ├── budifi.db                  # Local SQLite database
-│   └── db_exports/                # CSV exports of database tables for deployment imports
-│
-├── mockdata/                      # Seed and mock data utilities
-│   ├── __init__.py
-│   ├── course.mock.json
-│   └── data_import.py
-│
-├── models/                        # SQLAlchemy ORM models
-│   ├── __init__.py
-│   ├── user.py
-│   ├── course.py
-│   ├── lesson.py
-│   ├── lesson_progress.py
-│   ├── quiz.py
-│   └── question.py
-│
-└── service/
-    └── data_manager/              # Business logic layer
-        ├── __init__.py
-        └── course_data_manager.py
-```
-
----
-
-##  Data Models
-
-- `User` – represents users of the app
-- `Course` – available microlearning courses
-- `Lesson` – individual lessons per course
-- `Quiz` – each lesson has one quiz (1:1); designed to support multiple questions in the future
-- `Question` – currently planned for scalability; not yet fully implemented
-- `LessonProgress` – relationship table that stores completion per user and lesson
-
----
-
-##  Endpoints
-
-| Endpoint | Method | Description                         |
-|---------|--------|-------------------------------------|
-| `/api/health` | GET | Check backend status                |
-| `/api/register` | POST | Register new user                   |
-| `/api/login` | POST | Login, returns JWT token            |
-| `/api/me` | GET | Get current user session from token |
-| `/api/courses` | GET | Get all courses data                |
-| `/api/user/<int:user_id>/progress` | GET | Get progress for a user             |
-| `/api/user/<int:user_id>/progress` | PUT | Update lesson progress for a user   |
+| Endpoint | Method | Description |
+|----------|---------|-------------|
+| /api/health | GET | Check backend status |
+| /api/register | POST | Register new user |
+| /api/login | POST | Login and receive JWT token |
+| /api/me | GET | Get current authenticated user |
+| /api/courses | GET | Retrieve all courses |
+| /api/user/<int:user_id>/progress | GET | Get lesson progress |
+| /api/user/<int:user_id>/progress | PUT | Update lesson progress |
 
 ---
 
 ## Authentication & Security
 
-⚠️ Currently, all endpoints are public. Although a `@token_required` decorator is defined in the codebase, it is not yet applied to any routes. Therefore, routes like `/api/me`, `/api/courses`, and `/api/user/<int:user_id>/progress` are accessible without authentication.
+JWT-based authentication is implemented for protected application routes.
 
-This setup is temporary and will be updated in a future version to secure all sensitive routes using JWT-based authentication.
+Protected endpoints include:
 
-Once protection is implemented, users will authenticate as follows:
+- GET /api/me
+- GET /api/courses
+- GET /api/user/<int:user_id>/progress
+- PUT /api/user/<int:user_id>/progress
 
-1. Send a POST request to `/api/login` with valid credentials.
-2. The response will include a JWT token.
-3. Include this token in the `Authorization` header when making requests:
+Authentication is enforced through JWT validation before granting access to protected resources.
 
-```http
-Authorization: Bearer <your_token_here>
-```
+### Authentication Flow
 
----
+1. User logs in via POST /api/login
+2. Backend returns a JWT token
+3. Client sends the token in the Authorization header
+4. Protected routes validate the token before processing requests
 
-##  Usage (Local)
+Example:
 
-1. Clone the repo  
-2. Create a virtual environment  
-3. Run:  
-```bash
-pip install -r requirements.txt
-```
-
-4. Add a `.env` file in the root folder:
-```dotenv
-SECRET_KEY=your-secret-key-for-JWT-signature-validation
-DATABASE_URL=sqlite:///data/budifi.db
-```
-
-5. Start the app:
-```bash
-python3 app.py
-```
+http Authorization: Bearer <your_token_here> 
 
 ---
 
-## Usage (Deployed)
+## Deployment
 
-A deployed version of the Buddy.Fi frontend is available here:  
-[https://buddyfi-2.vercel.app/](https://buddyfi-2.vercel.app/)
+### Frontend
 
-⚠️ Note: The deployed version is currently under development. For the MVP demo setup, the frontend is deployed on Vercel while the backend runs locally on your machine.
+https://buddyfi-2.vercel.app/
 
-- Make sure your backend is running locally via `python3 app.py`
-- Then open the deployed frontend URL in your browser to test the connection
-- This setup simulates how the final app might interact with a hosted backend in the future
+### Backend API
+
+https://buddyfi-backend.onrender.com/
+
+### Money Compass API
+
+https://money-compass-api.onrender.com/
+
+The Buddy.Fi ecosystem is deployed across multiple services:
+
+- Frontend hosted on Vercel
+- Backend REST API hosted on Render
+- Money Compass AI service hosted on Render
+- PostgreSQL database hosted on Supabase
+- Learning videos hosted in Firebase Storage
+
+This architecture separates frontend, backend, AI services, database, and media storage into independent, scalable services.
 
 ---
 
-##  Screenshots
+## Local Development
 
-**Wireframes:**
-<img src="./assets/wireframes_v3.png" alt="App Flow" width="100%">
+Install dependencies:
 
+bash pip install -r requirements.txt 
 
-**App Flow (Routing):**
-<img src="./assets/app_flow_v1.png" alt="App Flow" width="100%">
+Create a .env file:
 
+dotenv SECRET_KEY=your-secret-key DATABASE_URL=sqlite:///data/budifi.db 
 
-**Entity Relationship Diagram:**  
-<img src="./assets/er_diagramm_v3.png" alt="ER Diagram" width="100%">
+Start the server:
 
+bash python3 app.py 
+
+The API will be available at:
+
+text http://localhost:5003 
+
+---
+
+## Project Structure
+
+text budifi-backend/ │ ├── app.py ├── data_manager.py ├── extentions.py ├── requirements.txt ├── .env │ ├── data/ │   ├── budifi.db │   └── db_exports/ │ ├── mockdata/ │   ├── course.mock.json │   └── data_import.py │ ├── models/ │   ├── user.py │   ├── course.py │   ├── lesson.py │   ├── lesson_progress.py │   ├── quiz.py │   └── question.py │ └── service/     └── data_manager/         └── course_data_manager.py 
 
 ---
 
 ## Tech Stack
 
-- Python 3  
-- Flask  
-- SQLAlchemy  
-- SQLite (for development)  
-- JWT for authentication  
-- dotenv for secrets  
+- Python 3
+- Flask
+- SQLAlchemy
+- SQLite (local development)
+- PostgreSQL / Supabase (cloud deployment)
+- JWT Authentication
+- Flask-CORS
+- bcrypt
+- dotenv
 
 ---
 
-##  Roadmap
+## Roadmap
 
 Coming next:
 
-- Improved design and visual polish
-- Add fun & motivational dashboard (progress tracking, badges)
-- Introduce AI feature (TBD)
-- Payment integration (for subscription or donation model)
-
----
-
-##  Notes
-
-- Backend works without the frontend – you can test API endpoints via tools like Postman or curl.
-- Data is stored in a local SQLite database (can be migrated later).
-
-
-_______________
----
+- Admin dashboard integration
+- Payment API integration
