@@ -214,7 +214,17 @@ def create_user():
 @app.route('/api/faq', methods=['POST'])
 def generate_ai_response():
     data = request.get_json()
-    user_prompt = data.get("user_prompt")
+    
+    user_prompt = data.get("user_prompt").lower()
+
+    # INTENT 1: Book Call
+    if "termin" in user_prompt or "gespräch" in user_prompt:
+        return {"type": "action", "action": "book_call"}
+
+    # INTENT 2: Contact
+    if "kontakt" in user_prompt or "email" in user_prompt:
+        return {"type": "action", "action": "contact"}
+
     response = client.responses.create(
         model="gpt-4.1",
         input=[
